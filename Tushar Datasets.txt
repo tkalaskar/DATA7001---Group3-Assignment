@@ -1,0 +1,173 @@
+
+## Commit: Extended Integration of Biomedical Datasets and APIs for Drug Discovery Pipeline
+
+### Overview
+
+This commit extends the existing data integration framework by incorporating additional authoritative biomedical datasets. These sources enhance the pipeline’s capability to support advanced machine learning, network analysis, and drug discovery tasks by expanding coverage across chemical, biological, genomic, and pharmacovigilance domains.
+
+---
+
+### Data Sources
+
+#### 1. ChEMBL API
+
+[https://www.ebi.ac.uk/chembl/api/data/docs](https://www.ebi.ac.uk/chembl/api/data/docs)
+
+* Provides curated bioactivity data for drug-like compounds
+* Includes molecules, targets, assays, and activity metrics
+* Supports REST-based querying for dynamic data retrieval
+
+---
+
+#### 2. STRING Database
+
+[https://string-db.org/cgi/download?sessionId=bWAilGSjQa6V](https://string-db.org/cgi/download?sessionId=bWAilGSjQa6V)
+
+* Contains protein–protein interaction networks
+* Enables graph-based analysis and biological pathway exploration
+
+---
+
+#### 3. Drug Classification Dataset (Kaggle)
+
+[https://www.kaggle.com/datasets/prathamtripathi/drug-classification](https://www.kaggle.com/datasets/prathamtripathi/drug-classification)
+
+* Structured dataset for supervised classification tasks
+* Includes patient attributes and corresponding drug labels
+
+---
+
+#### 4. Drug Discovery / Virtual Screening Dataset (Kaggle)
+
+[https://www.kaggle.com/datasets/shahriarkabir/drug-discovery-virtual-screening-dataset](https://www.kaggle.com/datasets/shahriarkabir/drug-discovery-virtual-screening-dataset)
+
+* Provides molecular descriptors and screening outcomes
+* Suitable for predictive modelling and candidate prioritisation
+
+---
+
+#### 5. ChEMBL Dataset (BigQuery / Kaggle)
+
+[https://www.kaggle.com/datasets/bigquery/ebi-chembl](https://www.kaggle.com/datasets/bigquery/ebi-chembl)
+
+* Large-scale dataset derived from ChEMBL
+* Supports distributed data processing and analytics
+
+---
+
+#### 6. PubChem
+
+[https://pubchem.ncbi.nlm.nih.gov/](https://pubchem.ncbi.nlm.nih.gov/)
+
+* Extensive repository of chemical compounds and bioassay data
+* Includes molecular structures, descriptors, and biological activities
+* Useful for feature engineering and large-scale data enrichment
+
+---
+
+#### 7. ZINC Database
+
+[https://zinc.docking.org/](https://zinc.docking.org/)
+
+* Database of commercially available compounds for virtual screening
+* Widely used in molecular docking and ligand discovery
+* Provides ready-to-use 3D molecular structures
+
+---
+
+#### 8. DrugBank
+
+[https://go.drugbank.com/](https://go.drugbank.com/)
+
+* Integrates detailed drug data with target and mechanism information
+* Includes pharmacological, chemical, and interaction data
+* Supports drug–target interaction modelling
+
+---
+
+#### 9. BindingDB
+
+[https://www.bindingdb.org/](https://www.bindingdb.org/)
+
+* Contains experimental protein–ligand binding affinities (e.g., Ki, IC50)
+* Useful for supervised learning in binding prediction tasks
+* Complements ChEMBL with focused affinity data
+
+---
+
+#### 10. Open Targets Platform
+
+[https://www.opentargets.org/](https://www.opentargets.org/)
+
+* Links diseases with potential therapeutic targets
+* Integrates genomics, transcriptomics, and drug data
+* Supports target identification and prioritisation
+
+---
+
+#### 11. The Cancer Genome Atlas (TCGA)
+
+[https://portal.gdc.cancer.gov/](https://portal.gdc.cancer.gov/)
+
+* Large-scale cancer genomics dataset
+* Includes gene expression, mutations, and clinical data
+* Enables precision medicine and oncology-focused drug discovery
+
+---
+
+#### 12. SIDER
+
+[http://sideeffects.embl.de/](http://sideeffects.embl.de/)
+
+* Provides information on drug side effects and adverse reactions
+* Useful for safety modelling and pharmacovigilance analysis
+* Enables risk-aware drug development
+
+---
+
+### Technical Integration
+
+* API-based ingestion (ChEMBL REST endpoints, PubChem access)
+* Batch processing of structured datasets (Kaggle, TCGA, DrugBank)
+* Integration of graph-based biological networks (STRING, Open Targets)
+* Handling of molecular structure data (ZINC, PubChem)
+* Data preprocessing:
+
+  * Cleaning and deduplication
+  * Feature extraction (molecular descriptors, gene expression)
+  * Normalisation and scaling
+* Storage and processing using scalable frameworks (e.g., Spark, BigQuery)
+
+---
+
+### Intended Applications
+
+* Drug classification and prediction models
+* Drug–target interaction prediction
+* Binding affinity modelling
+* Graph-based learning using protein interaction networks (GNNs)
+* Virtual screening and compound prioritisation
+* Genomics-driven target discovery
+* Drug safety and side-effect prediction
+
+---
+
+### Significance
+
+This extended integration establishes a **comprehensive, multi-modal data ecosystem** combining:
+
+* Chemical data (ChEMBL, PubChem, ZINC)
+* Biological interaction networks (STRING, Open Targets)
+* Clinical and genomic data (TCGA)
+* Pharmacological and safety data (DrugBank, SIDER, BindingDB)
+
+The result is a **robust foundation for scalable, end-to-end drug discovery pipelines**, aligned with modern AI-driven pharmaceutical research.
+
+---
+
+### Author
+
+Tushar Kalaskar
+DATA7001
+The University of Queensland
+Semester 1, 2026

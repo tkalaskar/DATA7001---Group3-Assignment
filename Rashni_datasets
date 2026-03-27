@@ -1,0 +1,59 @@
+Commit: Integration of HIV/AIDS Drug Discovery Datasets and Front-End Setup for Data Science Pipeline
+
+Overview:
+This commit integrates multiple HIV/AIDS drug discovery datasets into a scalable data science workflow and marks the beginning of front-end development. The datasets provide chemical, pharmacological, and patent information suitable for machine learning, predictive modelling, and analytics. The front-end setup will allow visualization, interactive exploration, and user-friendly access to the integrated data.
+
+Data Sources:
+
+ChEMBL Compound Data – CHEMBL114
+https://www.ebi.ac.uk/chembl/explore/compound/CHEMBL114
+Provides curated bioactivity data for CHEMBL114
+Includes chemical structures, targets, assays, and activity metrics
+Suitable for feature engineering and predictive modelling
+
+PubChem HIV/AIDS Drug Discovery Datasets
+https://pubchem.ncbi.nlm.nih.gov/#query=drug+discovery+related+HIV+AIDS+datasets
+Structured chemical and biological datasets relevant to HIV/AIDS
+Ready for ML tasks (classification/regression)
+Supports batch downloads and integration into Python/R pipelines
+
+WIPO Patent Data – WO2025125695
+https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2025125695
+Includes chemical structures, claims, and synthesis methods
+Useful for patent analytics and NLP-based text mining pipelines
+
+DrugBank Compound DB15656
+https://go.drugbank.com/drugs/DB15656
+Pharmacological and chemical data for HIV/AIDS-related compounds
+Supports ML pipelines for drug–target interaction prediction
+
+DrugBank Compound DB11066
+https://go.drugbank.com/drugs/DB11066
+Detailed chemical, clinical, and interaction data
+Supports drug repurposing studies and predictive analytics
+
+Technical Integration:
+
+API-based ingestion of ChEMBL and DrugBank datasets
+Batch download and preprocessing of PubChem structured datasets
+Parsing chemical and bioactivity features for machine learning
+Integration of patent metadata for NLP-based analytics
+Data cleaning, normalization, feature engineering, and dataset merging
+Front-end development initiated – adding initial files for data visualization and user interface
+
+Intended Applications:
+
+Predictive modelling for HIV/AIDS drug activity or classification
+Drug–target interaction analysis using supervised and unsupervised methods
+Patent-informed novelty detection and analytics
+Interactive data visualization and exploration through the front-end
+Support for end-to-end data science workflows with Python, Spark, or cloud pipelines
+
+Significance:
+
+This integration establishes a unified dataset combining chemical, pharmacological, and patent information while initiating front-end development for interactive exploration. It enables robust data science pipelines, supports ML-driven drug discovery workflows, and facilitates reproducible analytics for research and development in HIV/AIDS therapeutics.
+
+Author
+Rashni Preethi C
+M.Sc. Data Science – The University of Queensland
+2026

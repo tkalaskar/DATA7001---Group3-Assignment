@@ -1,0 +1,7 @@
+layer,status,elapsed_s,timestamp,metric_n_edges,metric_n_validated,metric_n_features,metric_graph_density,metric_best_accuracy,metric_best_interpretability,metric_best_complexity,metric_pareto_front_size,metric_total_evaluations,metric_shap_consistency,metric_n_counterfactuals_found,metric_sae_reconstruction_error,metric_sae_active_features,metric_sae_sparsity_ratio,metric_top_feature,metric_n_rules,metric_avg_compliance,metric_n_compliant,metric_n_total,metric_compliance_rate,metric_laws_checked,metric_n_violations,metric_total_severity,metric_kill_signal,metric_physics_compliant,metric_mode,metric_n_hypotheses,metric_n_new_rules,metric_n_fitness_suggestions
+causal_discovery,success,0.032,2026-03-19T05:21:09.723082+00:00,0.0,0.0,6.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,,
+evolutionary_search,success,98.575,2026-03-19T05:22:48.295448+00:00,,,,,0.781741,0.9464,268.0,5.0,36.0,,,,,,,,,,,,,,,,,,,,
+explainability,success,4.524,2026-03-19T05:22:52.822332+00:00,,,,,,,,,,1.0,0.0,0.998625,8.0,0.6667,logP,,,,,,,,,,,,,,
+neuro_symbolic,success,0.385,2026-03-19T05:22:53.208296+00:00,,,,,,,,,,,,,,,,5.0,0.632,1908.0,1908.0,1.0,,,,,,,,,
+physics_informed,success,0.01,2026-03-19T05:22:53.218909+00:00,,,,,,,,,,,,,,,,,,,,,3.0,6.0,3.086,True,False,,,,
+foundation_agent,success,5.367,2026-03-19T05:22:58.586648+00:00,,,,,,,,,,,,,,,,,,,,,,,,,,offline,1.0,0.0,0.0

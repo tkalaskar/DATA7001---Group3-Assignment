@@ -1,0 +1,315 @@
+{
+  "iteration": 1,
+  "layers": {
+    "causal_discovery": {
+      "nodes": [
+        "molecular_weight",
+        "logP",
+        "hbd",
+        "hba",
+        "tpsa",
+        "rotatable_bonds"
+      ],
+      "edges": [],
+      "n_edges": 0
+    },
+    "evolutionary_search": {
+      "population_size": 6,
+      "pareto_front_size": 5,
+      "pareto_front": [
+        {
+          "genome": {
+            "n_estimators": 0.32098432490518775,
+            "max_depth": 0.10585099751705822,
+            "learning_rate": 0.38026368493759777,
+            "subsample": 1.0,
+            "min_samples_split": 0.7527548681467202,
+            "min_samples_leaf": 0.8299057976517397
+          },
+          "fitness": {
+            "accuracy": 0.050547,
+            "interpretability": 0.9666,
+            "complexity": 167.0
+          },
+          "rank": 0
+        },
+        {
+          "genome": {
+            "n_estimators": 0.34650746232168855,
+            "max_depth": 0.10426556165227847,
+            "learning_rate": 0.38497149561796934,
+            "subsample": 0.9999775595383944,
+            "min_samples_split": 0.7673831294572677,
+            "min_samples_leaf": 0.8468955455423252
+          },
+          "fitness": {
+            "accuracy": 0.063667,
+            "interpretability": 0.9642,
+            "complexity": 179.0
+          },
+          "rank": 0
+        },
+        {
+          "genome": {
+            "n_estimators": 0.5269843819175998,
+            "max_depth": 0.08674548791083628,
+            "learning_rate": 0.998237085146499,
+            "subsample": 0.38722561840057856,
+            "min_samples_split": 0.4658143458180472,
+            "min_samples_leaf": 0.0246399220737294
+          },
+          "fitness": {
+            "accuracy": 0.781741,
+            "interpretability": 0.9464,
+            "complexity": 268.0
+          },
+          "rank": 0
+        },
+        {
+          "genome": {
+            "n_estimators": 0.5263238189101045,
+            "max_depth": 0.08554204168852002,
+            "learning_rate": 1.0,
+            "subsample": 0.6680905455270542,
+            "min_samples_split": 0.4100984202661193,
+            "min_samples_leaf": 0.03014954725051467
+          },
+          "fitness": {
+            "accuracy": 0.7776,
+            "interpretability": 0.9466,
+            "complexity": 267.0
+          },
+          "rank": 0
+        },
+        {
+          "genome": {
+            "n_estimators": 0.43135008588954926,
+            "max_depth": 0.08557456888834518,
+            "learning_rate": 0.9999154926954404,
+            "subsample": 0.5360116402103108,
+            "min_samples_split": 0.40988261463898773,
+            "min_samples_leaf": 0.029814850273466382
+          },
+          "fitness": {
+            "accuracy": 0.776289,
+            "interpretability": 0.9558,
+            "complexity": 221.0
+          },
+          "rank": 0
+        }
+      ],
+      "all_solutions": [
+        {
+          "fitness": {
+            "accuracy": 0.050547,
+            "interpretability": 0.9666,
+            "complexity": 167.0
+          },
+          "rank": 0
+        },
+        {
+          "fitness": {
+            "accuracy": 0.063667,
+            "interpretability": 0.9642,
+            "complexity": 179.0
+          },
+          "rank": 0
+        },
+        {
+          "fitness": {
+            "accuracy": 0.781741,
+            "interpretability": 0.9464,
+            "complexity": 268.0
+          },
+          "rank": 0
+        },
+        {
+          "fitness": {
+            "accuracy": 0.7776,
+            "interpretability": 0.9466,
+            "complexity": 267.0
+          },
+          "rank": 0
+        },
+        {
+          "fitness": {
+            "accuracy": 0.776289,
+            "interpretability": 0.9558,
+            "complexity": 221.0
+          },
+          "rank": 0
+        },
+        {
+          "fitness": {
+            "accuracy": 0.063509,
+            "interpretability": 0.9642,
+            "complexity": 179.0
+          },
+          "rank": 1
+        }
+      ]
+    },
+    "explainability": {
+      "metrics": {
+        "shap_consistency": 1.0,
+        "n_counterfactuals_found": 0,
+        "sae_reconstruction_error": 0.998625,
+        "sae_active_features": 8,
+        "sae_sparsity_ratio": 0.6667,
+        "top_feature": "logP"
+      },
+      "shap_result": {
+        "expected_value": 0.5750175011460176,
+        "mean_abs_shap": {
+          "logP": 0.07704514961440997,
+          "molecular_weight": 0.036435041606087834,
+          "tpsa": 0.021664563194218448,
+          "hba": 0.016073401458349058,
+          "hbd": 0.01454617595418223,
+          "rotatable_bonds": 0.0025121748020194416
+        },
+        "feature_ranking": [
+          "logP",
+          "molecular_weight",
+          "tpsa",
+          "hba",
+          "hbd",
+          "rotatable_bonds"
+        ]
+      },
+      "counterfactuals": [],
+      "sae_info": {
+        "latent_dim": 12,
+        "active_features": 8,
+        "reconstruction_error": 0.9986249509448385
+      }
+    },
+    "neuro_symbolic": {
+      "metrics": {
+        "n_rules": 5,
+        "avg_compliance": 0.632,
+        "n_compliant": 1908,
+        "n_total": 1908,
+        "compliance_rate": 1.0
+      },
+      "per_rule_compliance": {
+        "lipinski_rule_of_five": 1.0,
+        "veber_rules": 1.0,
+        "bbb_penetration": 0.159853249475891,
+        "pains_filter": 1.0,
+        "target_druggability": 0.0
+      },
+      "rules_applied": [
+        {
+          "name": "lipinski_rule_of_five",
+          "description": "Oral bioavailability filter for drug-likeness",
+          "source": "domain_expert"
+        },
+        {
+          "name": "veber_rules",
+          "description": "Oral bioavailability based on flexibility and polarity",
+          "source": "domain_expert"
+        },
+        {
+          "name": "bbb_penetration",
+          "description": "Blood-brain barrier penetration likelihood",
+          "source": "domain_expert"
+        },
+        {
+          "name": "pains_filter",
+          "description": "Pan-assay interference compounds filter",
+          "source": "domain_expert"
+        },
+        {
+          "name": "target_druggability",
+          "description": "Protein target must have known binding pocket",
+          "source": "domain_expert"
+        }
+      ]
+    },
+    "physics_informed": {
+      "violations": [
+        "1084 samples have non-positive molecular weight",
+        "947 samples have more H-bond donors/acceptors than MW allows",
+        "1096 samples have tpsa outside [0, 500]",
+        "832 samples have rotatable_bonds outside [0, 50]",
+        "1093 samples have hbd outside [0, 20]",
+        "836 samples have hba outside [0, 30]"
+      ]
+    },
+    "foundation_agent": {
+      "hypotheses": [
+        "HYPOTHESIS: logP is the dominant predictive feature (SHAP consistency = 1.0). This feature should be prioritised in experimental design for the next research cycle."
+      ],
+      "new_rules": [],
+      "fitness_suggestions": []
+    }
+  },
+  "summary": {
+    "causal_discovery": {
+      "status": "success",
+      "elapsed_seconds": 0.032,
+      "key_metrics": {
+        "n_edges": 0,
+        "n_validated": 0,
+        "n_features": 6,
+        "graph_density": 0.0
+      }
+    },
+    "evolutionary_search": {
+      "status": "success",
+      "elapsed_seconds": 98.575,
+      "key_metrics": {
+        "best_accuracy": 0.781741,
+        "best_interpretability": 0.9464,
+        "best_complexity": 268.0,
+        "pareto_front_size": 5,
+        "total_evaluations": 36
+      }
+    },
+    "explainability": {
+      "status": "success",
+      "elapsed_seconds": 4.524,
+      "key_metrics": {
+        "shap_consistency": 1.0,
+        "n_counterfactuals_found": 0,
+        "sae_reconstruction_error": 0.998625,
+        "sae_active_features": 8,
+        "sae_sparsity_ratio": 0.6667,
+        "top_feature": "logP"
+      }
+    },
+    "neuro_symbolic": {
+      "status": "success",
+      "elapsed_seconds": 0.385,
+      "key_metrics": {
+        "n_rules": 5,
+        "avg_compliance": 0.632,
+        "n_compliant": 1908,
+        "n_total": 1908,
+        "compliance_rate": 1.0
+      }
+    },
+    "physics_informed": {
+      "status": "success",
+      "elapsed_seconds": 0.01,
+      "key_metrics": {
+        "laws_checked": 3,
+        "n_violations": 6,
+        "total_severity": 3.086,
+        "kill_signal": true,
+        "physics_compliant": false
+      }
+    },
+    "foundation_agent": {
+      "status": "success",
+      "elapsed_seconds": 5.367,
+      "key_metrics": {
+        "mode": "offline",
+        "n_hypotheses": 1,
+        "n_new_rules": 0,
+        "n_fitness_suggestions": 0
+      }
+    }
+  }
+}

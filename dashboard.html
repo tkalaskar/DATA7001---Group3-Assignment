@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        apex: { bg:'#060612', surface:'#0F0F23', card:'#161632', border:'#2A2A4A',
+                primary:'#6C5CE7', secondary:'#00CEC9', accent:'#FD79A8',
+                success:'#00B894', warning:'#FDCB6E', danger:'#E17055',
+                text:'#EAEAEA', muted:'#8B8BA7' }
+      },
+      fontFamily: { mono:['JetBrains Mono','monospace'], sans:['Inter','sans-serif'] }
+    }
+  }
+}
+</script>
+<style>
+  body { background: #060612; color: #EAEAEA; font-family: 'Inter', sans-serif; }
+  .glass { background: rgba(22,22,50,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(42,42,74,0.4); border-radius: 16px; }
+  .glow { box-shadow: 0 0 30px rgba(108,92,231,0.15), 0 0 60px rgba(108,92,231,0.05); }
+  .gradient-text { background: linear-gradient(90deg,#6C5CE7,#00CEC9,#FD79A8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+  .spin { animation: spin 20s linear infinite; }
+  .pulse-dot { animation: pulse 1.5s ease-in-out infinite; }
+  .bar-animate { transition: width 0.8s ease; }
+  ::-webkit-scrollbar { width:6px } ::-webkit-scrollbar-track { background:#060612 } ::-webkit-scrollbar-thumb { background:#2A2A4A; border-radius:3px }
+</style>
+</head>
+<body class="min-h-screen antialiased">
+
+<!-- Background orbs -->
+<div style="position:fixed;inset:0;pointer-events:none;overflow:hidden">
+  <div style="position:absolute;top:-160px;left:-160px;width:384px;height:384px;background:rgba(108,92,231,0.1);border-radius:50%;filter:blur(48px)"></div>
+  <div style="position:absolute;top:33%;right:-160px;width:320px;height:320px;background:rgba(0,206,201,0.08);border-radius:50%;filter:blur(48px)"></div>
+  <div style="position:absolute;bottom:-160px;left:33%;width:384px;height:384px;background:rgba(253,121,168,0.06);border-radius:50%;filter:blur(48px)"></div>
+</div>
+
+<div style="position:relative;z-index:10">
+
+<!-- Header -->
+<header style="border-bottom:1px solid rgba(42,42,74,0.3);backdrop-filter:blur(20px);background:rgba(6,6,18,0.8);position:sticky;top:0;z-index:50">
+  <div style="max-width:1600px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="spin" style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#6C5CE7,#00CEC9,#FD79A8);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(108,92,231,0.3)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>
+      </div>
+      <div>
+        <h1 style="font-size:20px;font-weight:800;letter-spacing:-0.5px" class="gradient-text">APEX</h1>
+        <p style="font-size:10px;color:#8B8BA7;font-family:'JetBrains Mono',monospace;letter-spacing:2px">AUTONOMOUS PARADIGM-FUSING EXPLANATION ENGINE</p>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px">
+      <span style="font-size:12px;color:#8B8BA7;font-family:'JetBrains Mono',monospace">UQ DATA7001 &middot; March 2026</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div id="statusDot" class="pulse-dot" style="width:10px;height:10px;border-radius:50%;background:#E17055"></div>
+        <span id="statusText" style="font-size:11px;font-family:'JetBrains Mono',monospace;color:#8B8BA7">CONNECTING</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main -->
+<main style="max-width:1600px;margin:0 auto;padding:24px">
+
+  <!-- Controls -->
+  <div class="glass glow" style="padding:24px;margin-bottom:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <h2 style="font-size:18px;font-weight:700">Pipeline Control</h2>
+        <p style="font-size:14px;color:#8B8BA7;margin-top:4px">Launch the APEX 6-layer self-improving loop</p>
+      </div>
+      <button id="launchBtn" onclick="launchPipeline()" style="padding:12px 32px;border-radius:12px;font-weight:600;font-size:14px;border:none;cursor:pointer;background:linear-gradient(90deg,#6C5CE7,#00CEC9);color:white;box-shadow:0 4px 15px rgba(108,92,231,0.3);transition:all 0.3s">
+        LAUNCH APEX
+      </button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+      <div><label style="display:block;font-size:11px;font-family:'JetBrains Mono',monospace;color:#8B8BA7;margin-bottom:8px">DOMAIN</label><div style="padding:10px 16px;background:#0F0F23;border-radius:8px;border:1px solid rgba(42,42,74,0.4);font-size:14px">Drug Discovery</div></div>
+      <div><label style="display:block;font-size:11px;font-family:'JetBrains Mono',monospace;color:#8B8BA7;margin-bottom:8px">POPULATION</label><input id="popSize" type="number" value="6" min="4" max="200" style="width:100%;padding:10px 16px;background:#0F0F23;border-radius:8px;border:1px solid rgba(42,42,74,0.4);font-size:14px;color:#EAEAEA;outline:none"></div>
+      <div><label style="display:block;font-size:11px;font-family:'JetBrains Mono',monospace;color:#8B8BA7;margin-bottom:8px">GENERATIONS</label><input id="nGens" type="number" value="5" min="3" max="500" style="width:100%;padding:10px 16px;background:#0F0F23;border-radius:8px;border:1px solid rgba(42,42,74,0.4);font-size:14px;color:#EAEAEA;outline:none"></div>
+      <div><label style="display:block;font-size:11px;font-family:'JetBrains Mono',monospace;color:#8B8BA7;margin-bottom:8px">LAYERS</label><div style="padding:10px 16px;background:#0F0F23;border-radius:8px;border:1px solid rgba(42,42,74,0.4);font-size:14px">All 6 Layers</div></div>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="glass" style="padding:16px;margin-bottom:24px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+      <span style="font-size:14px;font-weight:500">Pipeline Progress</span>
+      <span id="progressLabel" style="font-size:14px;font-family:'JetBrains Mono',monospace;color:#8B8BA7">0/6 layers</span>
+    </div>
+    <div style="height:8px;background:#0F0F23;border-radius:999px;overflow:hidden">
+      <div id="progressBar" style="height:100%;width:0%;background:linear-gradient(90deg,#6C5CE7,#00CEC9,#FD79A8);border-radius:999px;transition:width 0.5s ease"></div>
+    </div>
+  </div>
+
+  <!-- Layer cards -->
+  <div class="glass" style="padding:24px;margin-bottom:24px">
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:20px">Pipeline Layers</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" id="layerGrid"></div>
+  </div>
+
+  <!-- Results tabs -->
+  <div id="resultsSection" style="display:none">
+
+    <!-- Tabs -->
+    <div class="glass" style="padding:6px;margin-bottom:24px;display:flex;gap:4px;width:fit-content">
+      <button class="tab-btn active" onclick="showTab('metrics')" style="padding:10px 20px;border-radius:12px;font-size:13px;font-weight:500;border:none;cursor:pointer;background:#6C5CE7;color:white;transition:all 0.3s">Metrics</button>
+      <button class="tab-btn" onclick="showTab('causal')" style="padding:10px 20px;border-radius:12px;font-size:13px;font-weight:500;border:none;cursor:pointer;background:transparent;color:#8B8BA7;transition:all 0.3s">Causal Graph</button>
+      <button class="tab-btn" onclick="showTab('shap')" style="padding:10px 20px;border-radius:12px;font-size:13px;font-weight:500;border:none;cursor:pointer;background:transparent;color:#8B8BA7;transition:all 0.3s">SHAP / XAI</button>
+      <button class="tab-btn" onclick="showTab('pareto')" style="padding:10px 20px;border-radius:12px;font-size:13px;font-weight:500;border:none;cursor:pointer;background:transparent;color:#8B8BA7;transition:all 0.3s">Pareto Front</button>
+      <button class="tab-btn" onclick="showTab('hypotheses')" style="padding:10px 20px;border-radius:12px;font-size:13px;font-weight:500;border:none;cursor:pointer;background:transparent;color:#8B8BA7;transition:all 0.3s">Hypotheses</button>
+    </div>
+
+    <div id="tab-metrics"></div>
+    <div id="tab-causal" style="display:none"></div>
+    <div id="tab-shap" style="display:none"></div>
+    <div id="tab-pareto" style="display:none"></div>
+    <div id="tab-hypotheses" style="display:none"></div>
+  </div>
+
+</main>
+</div>
+
+<script>
+const API = 'http://localhost:8000';
+const LAYERS = [
+  {key:'causal_discovery',name:'Causal Discovery',icon:'&#128279;',desc:'NOTEARS DAG learning'},
+  {key:'evolutionary_search',name:'Evolutionary Search',icon:'&#129516;',desc:'NSGA-III multi-objective'},
+  {key:'explainability',name:'Explainability',icon:'&#128269;',desc:'SHAP + Mechanistic MI'},
+  {key:'neuro_symbolic',name:'Neuro-Symbolic',icon:'&#9889;',desc:'Domain rule enforcement'},
+  {key:'physics_informed',name:'Physics-Informed',icon:'&#9883;',desc:'Conservation law checks'},
+  {key:'foundation_agent',name:'Foundation Agent',icon:'&#129302;',desc:'Gemini hypothesis synthesis'},
+];
+
+let ws = null;
+let layerData = {};
+let dashboardData = null;
+
+// Init layer cards
+function initLayers() {
+  const grid = document.getElementById('layerGrid');
+  grid.innerHTML = LAYERS.map(l => `
+    <div id="layer-${l.key}" style="padding:20px;border-radius:12px;border-left:4px solid #2A2A4A;background:rgba(15,15,35,0.5);transition:all 0.5s">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <span style="font-size:18px">${l.icon}</span>
+        <h3 style="font-size:14px;font-weight:600">${l.name}</h3>
+      </div>
+      <p style="font-size:12px;color:#8B8BA7">${l.desc}</p>
+      <div id="layer-status-${l.key}" style="margin-top:12px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#8B8BA7">Waiting...</div>
+    </div>
+  `).join('');
+}
+
+function updateLayer(key, status, metrics, elapsed) {
+  const el = document.getElementById('layer-' + key);
+  const statusEl = document.getElementById('layer-status-' + key);
+  if (!el) return;
+
+  const colors = { running:'#FDCB6E', success:'#00B894', failed:'#E17055' };
+  const bgColors = { running:'rgba(253,203,110,0.05)', success:'rgba(0,184,148,0.05)', failed:'rgba(225,112,85,0.05)' };
+  el.style.borderLeftColor = colors[status] || '#2A2A4A';
+  el.style.background = bgColors[status] || 'rgba(15,15,35,0.5)';
+
+  let html = '';
+  if (status === 'running') html = '<span style="color:#FDCB6E">&#9881; Running...</span>';
+  else if (status === 'success') {
+    html = `<span style="color:#00B894">&#10003; Done in ${elapsed?.toFixed(1)}s</span>`;
+    if (metrics && Object.keys(metrics).length > 0) {
+      html += '<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px">';
+      Object.entries(metrics).slice(0,4).forEach(([k,v]) => {
+        const val = typeof v === 'number' ? (v < 1 ? v.toFixed(4) : v.toFixed(1)) : String(v);
+        html += `<div style="font-size:11px"><span style="color:#8B8BA7">${k.replace(/_/g,' ')}: </span><span style="font-family:'JetBrains Mono',monospace">${val}</span></div>`;
+      });
+      html += '</div>';
+    }
+  } else if (status === 'failed') html = '<span style="color:#E17055">&#10007; Failed</span>';
+  statusEl.innerHTML = html;
+}
+
+function updateProgress(completed) {
+  document.getElementById('progressBar').style.width = (completed/6*100) + '%';
+  document.getElementById('progressLabel').textContent = completed + '/6 layers';
+}
+
+// WebSocket
+function connectWS() {
+  try {
+    ws = new WebSocket('ws://localhost:8000/ws');
+    ws.onopen = () => {
+      document.getElementById('statusDot').style.background = '#00B894';
+      document.getElementById('statusText').textContent = 'CONNECTED';
+    };
+    ws.onmessage = (e) => {
+      const msg = JSON.parse(e.data);
+      if (msg.type === 'layer_started') {
+        updateLayer(msg.layer, 'running');
+      }
+      if (msg.type === 'layer_completed') {
+        updateLayer(msg.layer, msg.status, msg.metrics, msg.elapsed_seconds);
+        layerData[msg.layer] = { status:msg.status, metrics:msg.metrics, elapsed:msg.elapsed_seconds };
+        updateProgress(Object.keys(layerData).length);
+      }
+      if (msg.type === 'pipeline_completed') {
+        dashboardData = msg.dashboard;
+        renderResults();
+        document.getElementById('launchBtn').textContent = 'LAUNCH APEX';
+        document.getElementById('launchBtn').style.opacity = '1';
+        document.getElementById('launchBtn').disabled = false;
+      }
+      if (msg.type === 'error') {
+        alert('Pipeline error: ' + msg.message);
+      }
+    };
+    ws.onclose = () => {
+      document.getElementById('statusDot').style.background = '#E17055';
+      document.getElementById('statusText').textContent = 'DISCONNECTED';
+      setTimeout(connectWS, 3000);
+    };
+  } catch(e) { setTimeout(connectWS, 3000); }
+}
+
+async function launchPipeline() {
+  const btn = document.getElementById('launchBtn');
+  btn.textContent = 'RUNNING...';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+  layerData = {};
+  dashboardData = null;
+  updateProgress(0);
+  LAYERS.forEach(l => updateLayer(l.key, 'pending'));
+
+  const pop = parseInt(document.getElementById('popSize').value) || 6;
+  const gen = parseInt(document.getElementById('nGens').value) || 5;
+
+  await fetch(API + '/pipeline/run', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ domain:'drug_discovery', n_iterations:1, population_size:pop, n_generations:gen })
+  });
+}
+
+function showTab(name) {
+  ['metrics','causal','shap','pareto','hypotheses'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t===name ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.style.background = 'transparent'; b.style.color = '#8B8BA7';
+  });
+  event.target.style.background = '#6C5CE7'; event.target.style.color = 'white';
+}
+
+function renderResults() {
+  if (!dashboardData) return;
+  document.getElementById('resultsSection').style.display = 'block';
+  const d = dashboardData;
+
+  // Metrics tab
+  const metricsCards = [
+    {label:'Causal Edges', val: d.layers?.causal_discovery?.n_edges ?? '0', color:'from-purple-500/20'},
+    {label:'Pareto Front', val: d.layers?.evolutionary_search?.pareto_front_size ?? '-', color:'from-cyan-500/20'},
+    {label:'Top Feature', val: d.layers?.explainability?.metrics?.top_feature ?? '-', color:'from-pink-500/20'},
+    {label:'Rule Compliance', val: d.layers?.neuro_symbolic?.metrics?.compliance_rate != null ? (d.layers.neuro_symbolic.metrics.compliance_rate*100).toFixed(1)+'%' : '-', color:'from-green-500/20'},
+    {label:'Hypotheses', val: d.layers?.foundation_agent?.hypotheses?.length ?? '-', color:'from-indigo-500/20'},
+  ];
+  document.getElementById('tab-metrics').innerHTML = `<div class="glass" style="padding:24px"><h2 style="font-size:18px;font-weight:700;margin-bottom:16px">Key Metrics</h2><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">${
+    metricsCards.map(c => `<div class="glass" style="padding:16px"><div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:#8B8BA7;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">${c.label}</div><div style="font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace">${c.val}</div></div>`).join('')
+  }</div></div>`;
+
+  // Causal tab
+  const edges = d.layers?.causal_discovery?.edges || [];
+  const nodes = d.layers?.causal_discovery?.nodes || [];
+  document.getElementById('tab-causal').innerHTML = `<div class="glass" style="padding:24px">
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:8px">Structural Causal Model</h2>
+    <p style="font-size:14px;color:#8B8BA7;margin-bottom:16px">Discovered by NOTEARS - ${edges.length} edges across ${nodes.length} nodes</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">${nodes.map(n => `<span style="padding:8px 16px;background:#6C5CE7;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px">${n}</span>`).join('')}</div>
+    ${edges.length > 0 ? `<table style="width:100%;font-size:14px"><thead><tr style="border-bottom:1px solid rgba(42,42,74,0.4)"><th style="text-align:left;padding:12px;color:#8B8BA7;font-family:'JetBrains Mono',monospace;font-size:12px">Source</th><th style="text-align:center;padding:12px;color:#8B8BA7">Dir</th><th style="text-align:left;padding:12px;color:#8B8BA7;font-family:'JetBrains Mono',monospace;font-size:12px">Target</th><th style="text-align:right;padding:12px;color:#8B8BA7;font-family:'JetBrains Mono',monospace;font-size:12px">Weight</th></tr></thead><tbody>${
+      edges.sort((a,b) => Math.abs(b.weight)-Math.abs(a.weight)).map(e => `<tr style="border-bottom:1px solid rgba(42,42,74,0.2)"><td style="padding:10px 12px;font-family:'JetBrains Mono',monospace">${e.source}</td><td style="text-align:center;color:#8B8BA7">&rarr;</td><td style="padding:10px 12px;font-family:'JetBrains Mono',monospace">${e.target}</td><td style="padding:10px 12px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;color:${e.weight>0?'#00B894':'#E17055'}">${e.weight.toFixed(4)}</td></tr>`).join('')
+    }</tbody></table>` : '<p style="text-align:center;color:#8B8BA7;padding:40px">No edges discovered (data may be standardized). Try with raw data.</p>'}
+  </div>`;
+
+  // SHAP tab
+  const shap = d.layers?.explainability?.shap_result || {};
+  const shapEntries = Object.entries(shap.mean_abs_shap || {}).sort(([,a],[,b]) => b-a).slice(0,10);
+  const maxShap = shapEntries.length > 0 ? shapEntries[0][1] : 1;
+  const cfs = d.layers?.explainability?.counterfactuals || [];
+  const sae = d.layers?.explainability?.sae_info || {};
+  document.getElementById('tab-shap').innerHTML = `<div class="glass" style="padding:24px;margin-bottom:24px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div><h2 style="font-size:18px;font-weight:700">Feature Importance - Mean |SHAP|</h2><p style="font-size:14px;color:#8B8BA7;margin-top:4px">Global feature attribution</p></div>
+      <div style="padding:8px 16px;border-radius:12px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;background:rgba(0,184,148,0.1);color:#00B894;border:1px solid rgba(0,184,148,0.3)">Consistency: ${(d.layers?.explainability?.metrics?.shap_consistency ?? 0).toFixed(4)}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">${shapEntries.map(([name,val]) => `
+      <div style="display:flex;align-items:center;gap:16px">
+        <div style="width:140px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;flex-shrink:0">${name}</div>
+        <div style="flex:1;height:32px;background:#0F0F23;border-radius:8px;overflow:hidden;position:relative">
+          <div class="bar-animate" style="height:100%;width:${(val/maxShap*100)}%;background:linear-gradient(90deg,#6C5CE7,#00CEC9);border-radius:8px"></div>
+          <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:700">${val.toFixed(4)}</span>
+        </div>
+      </div>
+    `).join('')}</div>
+  </div>
+  ${sae.latent_dim ? `<div class="glass" style="padding:24px;margin-bottom:24px">
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Mechanistic Interpretability (Sparse Autoencoder)</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div style="background:rgba(15,15,35,0.5);border-radius:12px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#6C5CE7">${sae.latent_dim}</div><div style="font-size:12px;color:#8B8BA7;margin-top:4px">Latent Dimensions</div></div>
+      <div style="background:rgba(15,15,35,0.5);border-radius:12px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#00CEC9">${sae.active_features}</div><div style="font-size:12px;color:#8B8BA7;margin-top:4px">Active Features</div></div>
+      <div style="background:rgba(15,15,35,0.5);border-radius:12px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#FD79A8">${sae.reconstruction_error?.toFixed(6)}</div><div style="font-size:12px;color:#8B8BA7;margin-top:4px">Reconstruction Error</div></div>
+    </div>
+  </div>` : ''}
+  ${cfs.length > 0 ? `<div class="glass" style="padding:24px"><h3 style="font-size:18px;font-weight:700;margin-bottom:8px">Counterfactual Explanations</h3><p style="font-size:14px;color:#8B8BA7;margin-bottom:16px">"What minimal changes would make this molecule a viable drug candidate?"</p><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">${cfs.map((cf,i) => `
+    <div style="background:rgba(15,15,35,0.8);border-radius:12px;padding:16px;border:1px solid rgba(42,42,74,0.3)">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="font-size:12px;font-family:'JetBrains Mono',monospace;color:#8B8BA7">CF #${i+1}</span><div style="font-size:12px;font-family:'JetBrains Mono',monospace"><span style="color:#E17055">${cf.original_prediction?.toFixed(3)}</span> <span style="color:#8B8BA7">&rarr;</span> <span style="color:#00B894">${cf.counterfactual_prediction?.toFixed(3)}</span></div></div>
+      ${Object.entries(cf.changes||{}).map(([f,c]) => `<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span style="font-family:'JetBrains Mono',monospace">${f}</span><span style="font-family:'JetBrains Mono',monospace"><span style="color:#8B8BA7">${c.from?.toFixed(2)}</span> &rarr; <span style="color:#00CEC9;font-weight:700">${c.to?.toFixed(2)}</span></span></div>`).join('')}
+      <div style="margin-top:8px;font-size:11px;color:#8B8BA7;font-family:'JetBrains Mono',monospace">${cf.n_features_changed} feature${cf.n_features_changed!==1?'s':''} changed</div>
+    </div>
+  `).join('')}</div></div>` : ''}`;
+
+  // Pareto tab
+  const allSols = d.layers?.evolutionary_search?.all_solutions || [];
+  const pareto = allSols.filter(s => s.rank === 0);
+  const dominated = allSols.filter(s => s.rank > 0);
+  document.getElementById('tab-pareto').innerHTML = `<div class="glass" style="padding:24px">
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:8px">Pareto Frontier</h2>
+    <p style="font-size:14px;color:#8B8BA7;margin-bottom:16px">${pareto.length} non-dominated solutions from ${allSols.length} total</p>
+    <canvas id="paretoCanvas" width="800" height="500" style="width:100%;max-height:450px;background:#0A0A1A;border-radius:12px"></canvas>
+    <div style="margin-top:20px"><table style="width:100%;font-size:14px"><thead><tr style="border-bottom:1px solid rgba(42,42,74,0.4)"><th style="text-align:left;padding:12px;color:#8B8BA7;font-family:'JetBrains Mono',monospace;font-size:12px">#</th><th style="text-align:right;padding:12px;color:#8B8BA7;font-family:'JetBrains Mono',monospace;font-size:12px">Accuracy</th><th style="text-align:right;padding:12px;color:#8B8BA7;font-family:'JetBrains Mono',monospace;font-size:12px">Interpretability</th><th style="text-align:right;padding:12px;color:#8B8BA7;font-family:'JetBrains Mono',monospace;font-size:12px">Complexity</th></tr></thead><tbody>${
+      pareto.sort((a,b) => (b.fitness?.accuracy||0)-(a.fitness?.accuracy||0)).map((s,i) => `<tr style="border-bottom:1px solid rgba(42,42,74,0.2)"><td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;color:#8B8BA7">${i+1}</td><td style="padding:10px 12px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;color:#00B894">${(s.fitness?.accuracy||0).toFixed(4)}</td><td style="padding:10px 12px;text-align:right;font-family:'JetBrains Mono',monospace;color:#00CEC9">${(s.fitness?.interpretability||0).toFixed(4)}</td><td style="padding:10px 12px;text-align:right;font-family:'JetBrains Mono',monospace;color:#FDCB6E">${(s.fitness?.complexity||0).toFixed(0)}</td></tr>`).join('')
+    }</tbody></table></div>
+  </div>`;
+  setTimeout(() => drawPareto(pareto, dominated), 100);
+
+  // Hypotheses tab
+  const hyp = d.layers?.foundation_agent?.hypotheses || [];
+  const rules = d.layers?.foundation_agent?.new_rules || [];
+  document.getElementById('tab-hypotheses').innerHTML = `<div class="glass" style="padding:24px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+      <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#6C5CE7,#FD79A8);display:flex;align-items:center;justify-content:center;font-size:18px">&#129504;</div>
+      <div><h2 style="font-size:18px;font-weight:700">Scientific Hypotheses</h2><p style="font-size:14px;color:#8B8BA7">Generated by the Foundation Agent</p></div>
+    </div>
+    ${hyp.map((h,i) => `<div style="background:rgba(15,15,35,0.6);border-radius:12px;padding:20px;border-left:4px solid #6C5CE7;margin-bottom:12px"><div style="display:flex;align-items:start;gap:12px"><div style="flex-shrink:0;width:32px;height:32px;border-radius:8px;background:rgba(108,92,231,0.2);display:flex;align-items:center;justify-content:center;color:#6C5CE7;font-weight:700;font-size:13px;font-family:'JetBrains Mono',monospace">H${i+1}</div><div style="font-size:14px;line-height:1.6;white-space:pre-wrap">${h}</div></div></div>`).join('')}
+    ${rules.length > 0 ? `<h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Proposed New Rules</h3>${rules.map(r => `<div style="background:rgba(15,15,35,0.6);border-radius:12px;padding:16px;border-left:4px solid #00CEC9;margin-bottom:8px"><div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#00CEC9;font-weight:700;margin-bottom:4px">${r.name||'Rule'}</div><div style="font-size:14px">${r.description||''}</div></div>`).join('')}` : ''}
+  </div>`;
+}
+
+function drawPareto(pareto, dominated) {
+  const canvas = document.getElementById('paretoCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const all = [...pareto, ...dominated];
+  if (all.length === 0) return;
+
+  const accVals = all.map(s => s.fitness?.accuracy || 0);
+  const intVals = all.map(s => s.fitness?.interpretability || 0);
+  const minA = Math.min(...accVals), maxA = Math.max(...accVals);
+  const minI = Math.min(...intVals), maxI = Math.max(...intVals);
+  const pad = 60;
+
+  const toX = v => pad + ((v-minA)/(maxA-minA+1e-8)) * (W-2*pad);
+  const toY = v => (H-pad) - ((v-minI)/(maxI-minI+1e-8)) * (H-2*pad);
+
+  ctx.fillStyle = '#0A0A1A'; ctx.fillRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle = '#2A2A4A'; ctx.lineWidth = 0.5; ctx.setLineDash([4,4]);
+  for (let i=0;i<=5;i++) { const y=pad+i*(H-2*pad)/5; ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(W-pad,y);ctx.stroke(); }
+  ctx.setLineDash([]);
+
+  // Dominated
+  dominated.forEach(s => {
+    ctx.beginPath(); ctx.arc(toX(s.fitness?.accuracy||0),toY(s.fitness?.interpretability||0),4,0,Math.PI*2);
+    ctx.fillStyle='rgba(99,110,114,0.4)'; ctx.fill();
+  });
+
+  // Pareto line
+  if (pareto.length > 1) {
+    const sorted = [...pareto].sort((a,b) => (a.fitness?.accuracy||0)-(b.fitness?.accuracy||0));
+    ctx.beginPath(); ctx.strokeStyle='rgba(0,206,201,0.5)'; ctx.lineWidth=1.5; ctx.setLineDash([6,3]);
+    sorted.forEach((s,i) => { const x=toX(s.fitness?.accuracy||0),y=toY(s.fitness?.interpretability||0); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  // Pareto points
+  pareto.forEach(s => {
+    const x=toX(s.fitness?.accuracy||0), y=toY(s.fitness?.interpretability||0);
+    ctx.beginPath(); ctx.arc(x,y,7,0,Math.PI*2); ctx.fillStyle='#6C5CE7'; ctx.fill();
+    ctx.strokeStyle='#00CEC9'; ctx.lineWidth=2; ctx.stroke();
+  });
+
+  // Labels
+  ctx.fillStyle='#EAEAEA'; ctx.font='bold 13px Inter'; ctx.textAlign='center';
+  ctx.fillText('Accuracy', W/2, H-10);
+  ctx.save(); ctx.translate(15,H/2); ctx.rotate(-Math.PI/2); ctx.fillText('Interpretability',0,0); ctx.restore();
+}
+
+// Init
+initLayers();
+connectWS();
+</script>
+</body>
+</html>

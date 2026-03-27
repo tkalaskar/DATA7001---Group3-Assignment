@@ -1,0 +1,75 @@
+# ============================================================================
+# APEX: Autonomous Paradigm-fusing Explanation Engine
+# UQ DATA7001 — Introduction to Data Science | March 2026
+# ============================================================================
+# Core
+numpy>=1.26.0
+pandas>=2.2.0
+scipy>=1.12.0
+scikit-learn>=1.4.0
+joblib>=1.3.0
+
+# ---------- Layer 1: Causal Discovery ----------
+dowhy>=0.11
+networkx>=3.2
+causal-learn>=0.1.3
+lingam>=1.8.0
+
+# ---------- Layer 2: Evolutionary Search ----------
+deap>=1.4.1
+pymoo>=0.6.1
+cmaes>=0.10.0
+
+# ---------- Layer 3: Explainability (XAI) ----------
+shap>=0.45.0
+lime>=0.2.0
+dice-ml>=0.11
+# captum>=0.7.0        # Requires torch; install separately if needed
+
+# ---------- Layer 4: Neuro-Symbolic ----------
+sympy>=1.12
+
+# ---------- Layer 5: Physics-Informed ----------
+# torch>=2.2.0          # Install separately if needed: pip install torch
+# deepxde>=1.11.0       # Install separately if needed: pip install deepxde
+
+# ---------- Layer 6: Foundation Model Agent ----------
+google-genai>=1.0.0
+
+# ---------- Evaluation & Uncertainty ----------
+optuna>=3.5.0
+
+# ---------- Visualization ----------
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.18.0
+kaleido>=0.2.1
+pyvis>=0.3.2
+graphviz>=0.20.0
+
+# ---------- API Server ----------
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+python-multipart>=0.0.6
+websockets>=12.0
+
+# ---------- Data Processing ----------
+# rdkit-pypi>=2023.9.0  # Not available for Python 3.13; install rdkit via conda if needed
+pyarrow>=15.0.0
+openpyxl>=3.1.0
+requests>=2.31.0
+aiohttp>=3.9.0
+tqdm>=4.66.0
+
+# ---------- Notebooks ----------
+jupyter>=1.0.0
+ipywidgets>=8.1.0
+nbformat>=5.9.0
+
+# ---------- Dev & Testing ----------
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+black>=24.0.0
+ruff>=0.2.0
+mypy>=1.8.0

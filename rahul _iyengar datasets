@@ -1,0 +1,73 @@
+## Commit: Integration of Biomedical Datasets and APIs for Drug Discovery Pipeline
+
+### Overview
+
+This commit incorporates multiple authoritative biomedical data sources to support the development of a scalable data analytics and machine learning pipeline for drug discovery. The integration enables access to chemical, biological, and pharmacological data required for downstream modelling and analysis.
+
+---
+
+### Data Sources
+
+1. ChEMBL API
+   https://www.ebi.ac.uk/chembl/api/data/docs
+
+* Provides curated bioactivity data for drug-like compounds
+* Includes molecules, targets, assays, and activity metrics
+* Supports REST-based querying for dynamic data retrieval
+
+2. STRING Database (Protein–Protein Interactions)
+   https://string-db.org/cgi/download?sessionId=bWAilGSjQa6V
+
+* Contains protein–protein interaction networks
+* Enables graph-based analysis and biological pathway exploration
+
+3. Drug Classification Dataset (Kaggle)
+   https://www.kaggle.com/datasets/prathamtripathi/drug-classification
+
+* Structured dataset for supervised classification tasks
+* Includes patient attributes and corresponding drug labels
+
+4. Drug Discovery / Virtual Screening Dataset (Kaggle)
+   https://www.kaggle.com/datasets/shahriarkabir/drug-discovery-virtual-screening-dataset
+
+* Provides molecular descriptors and screening outcomes
+* Suitable for predictive modelling and candidate prioritisation
+
+5. ChEMBL Dataset (BigQuery / Kaggle)
+   https://www.kaggle.com/datasets/bigquery/ebi-chembl
+
+* Large-scale dataset derived from ChEMBL
+* Supports distributed data processing and analytics
+
+---
+
+### Technical Integration
+
+* API-based data ingestion (ChEMBL REST endpoints)
+* Batch processing of structured datasets (Kaggle sources)
+* Integration of graph data (STRING PPI networks)
+* Data preprocessing: cleaning, transformation, and normalisation
+
+---
+
+### Intended Applications
+
+* Drug classification and prediction models
+* Drug–target interaction analysis
+* Network-based modelling using protein interaction data
+* Support for scalable analytics frameworks (e.g., Spark)
+
+---
+
+### Significance
+
+This integration establishes a unified data foundation combining chemical, biological, and clinical perspectives. It enables the development of robust, data-driven models aligned with contemporary drug discovery workflows.
+
+---
+
+### Author
+
+Rahul Vikram Iyengar
+DATA7201 – Data Analytics at Scale
+The University of Queensland
+Semester 1, 2026
